@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
 @app.get('/')
 def root():
-    return {"message": "Welcome to EPUB Image Extractor! 📚"}
+    return {'message': 'Welcome to EPUB Image Extractor! 📚'}
