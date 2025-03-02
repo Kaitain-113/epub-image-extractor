@@ -1,0 +1,75 @@
+[project]
+name = "epub-image-extractor"
+version = "0.1.0"
+description = "Image extractor for epub files"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.115.11",
+    "pre-commit>=4.1.0",
+]
+
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "ruff>=0.9.9",
+    "taskipy>=1.14.1",
+]
+
+
+[tool.taskipy.tasks]
+serve = "fastapi dev epub-image-extractor/main.py"
+run_host = 'fastapi dev fastapi_zero/app.py --host 0.0.0.0'
+test = 'pytest -s --cov=fastapi_zero -vv'
+
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+line-length = 88
+indent-width = 4
+
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+fixable = ["ALL"]
+
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
