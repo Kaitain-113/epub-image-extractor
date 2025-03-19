@@ -5,6 +5,7 @@ description = "Image extractor for epub files"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "ebooklib>=0.18",
     "fastapi[standard]>=0.115.11",
     "pre-commit>=4.1.0",
 ]

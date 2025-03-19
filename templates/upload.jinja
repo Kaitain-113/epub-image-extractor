@@ -33,6 +33,19 @@
             </div>
         </div>
     </nav>
+
+    <main class="container">
+        <form action="{{ url_for('extract_image_from_book') }}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="formFile" class="form-label">Selecionar livro dos arquivos</label>
+                <input name="epub_file" class="form-control" type="file" id="formFile">
+            </div>
+            
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </main>
+
+        
     <script src="{{ url_for('static', path='/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>
