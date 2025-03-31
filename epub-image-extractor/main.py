@@ -3,8 +3,8 @@ import os
 import uuid
 import zipfile
 
-from fastapi import FastAPI, Request, UploadFile, Form
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi import FastAPI, Request, UploadFile, Form 
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
@@ -46,10 +46,11 @@ def get_image_from_ebook(book_metadata: dict):
         for image_path in book_images:
             zipf.write(image_path, os.path.basename(image_path))
             logging.debug(f"Image added to ZIP: {image_path}")
+    #################
 
     logging.info(f"ZIP file created: {zip_file_path}")
 
-    return
+    return zip_file_path
 
 @app.get('/', response_class=HTMLResponse)
 async def render_upload_page(request: Request):
@@ -57,6 +58,7 @@ async def render_upload_page(request: Request):
 
 @app.post('/upload')
 async def extract_image_from_book(epub_file: UploadFile = Form(...)):
+    # Create folders
     book_images_dir = "/tmp/epub_image_extractor/extracted_images/"
     book_dir = "/tmp/epub_image_extractor/books/"
 
@@ -65,6 +67,7 @@ async def extract_image_from_book(epub_file: UploadFile = Form(...)):
     
     if not os.path.exists(book_dir):  
         os.makedirs(book_dir, exist_ok=True)
+    ####################
     
     book_metadata = {
         "book_dir": f"/tmp/epub_image_extractor/books/{epub_file.filename[:20] + str(uuid.uuid4())}",
@@ -74,9 +77,9 @@ async def extract_image_from_book(epub_file: UploadFile = Form(...)):
     with open(book_metadata.get("book_dir"), "wb") as file:
         file.write(await epub_file.read())
     
-    get_image_from_ebook(book_metadata)
+    zip_file = get_image_from_ebook(book_metadata)
     
-    return {'filename': epub_file.filename}
+    return FileResponse(zip_file, media_type='application/zip', filename=f"{book_metadata.get('book_name')}.zip")
 
 
 if __name__ == "__main__":
