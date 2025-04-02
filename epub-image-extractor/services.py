@@ -1,6 +1,8 @@
 import os
 
-from fastapi import UploadFile 
+from fastapi import UploadFile
+
+from .helpers import generate_uuid_string
 
 
 class EpubService:
@@ -9,6 +11,8 @@ class EpubService:
 
     def __init__(self):
         EpubService.__create_storage_folders()
+        self.book_storaged_file_name: str = ""
+        self.book_original_file_name: str = ""
 
     @classmethod
     def __create_storage_folders(cls):
@@ -21,4 +25,16 @@ class EpubService:
         if not os.path.exists(cls.__BOOK_DIR):  
             os.makedirs(cls.__BOOK_DIR, exist_ok=True)
 
+    
 
+    async def save_ebook_file(self, epub_file: UploadFile):
+        """
+        Save the uploaded EPUB file to a temporary directory.
+        """
+        book_storage_folder = os.path.join(
+            EpubService.__BOOK_DIR,
+            generate_uuid_string()
+        )
+
+        with open(book_storage_folder, "wb") as file:
+            file.write(await epub_file.read())
