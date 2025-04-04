@@ -1,18 +1,14 @@
 import os
-import zipfile
 
 from ebooklib import ITEM_IMAGE, epub
 from fastapi import UploadFile
 
-from .helpers import generate_uuid_string
+from .helpers import file_compressor, generate_uuid_string
 
 
 class EpubService:
     __BOOK_IMAGES_DIR = 'storage/extracted_images/'
     __BOOK_DIR = 'storage/books/'
-    __COMPRESSED_FILE_TYPE_HEADER = {
-        'zip': 'application/zip',
-    }
 
     def __init__(self):
         EpubService.__create_storage_folders()
@@ -45,12 +41,7 @@ class EpubService:
 
     def get_image_from_ebook(self, compressed_file_extension='zip') -> dict[str, str]:
         book_images = []
-        compressed_file_name = (
-            f'{self.book_original_file_name}.{compressed_file_extension}'
-        )
-        compressed_file_type_header = EpubService.__COMPRESSED_FILE_TYPE_HEADER.get(
-            compressed_file_extension
-        )
+
         images_dir = os.path.join(
             EpubService.__BOOK_IMAGES_DIR, self.output_images_dir_name
         )
@@ -69,14 +60,12 @@ class EpubService:
 
             book_images.append(image_path)
 
-        compressed_file_path = f'{images_dir}/{compressed_file_name}'
-
-        with zipfile.ZipFile(compressed_file_path, 'w') as zipf:
-            for image_path in book_images:
-                zipf.write(image_path, os.path.basename(image_path))
+        file_path, file_name, file_type_header = file_compressor(
+            images_dir, book_images
+        )
 
         return {
-            'file_name': compressed_file_name,
-            'compressed_file_path': compressed_file_path,
-            'filetype_header': compressed_file_type_header,
+            'file_name': file_name,
+            'compressed_file_path': file_path,
+            'file_type_header': file_type_header,
         }
