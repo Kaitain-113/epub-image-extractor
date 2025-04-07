@@ -3,7 +3,7 @@ import os
 from ebooklib import ITEM_IMAGE, epub
 from fastapi import UploadFile
 
-from .helpers import file_compressor, generate_uuid_string
+from .helpers import directory_creator, file_compressor, generate_uuid_string
 
 
 class EpubService:
@@ -21,11 +21,8 @@ class EpubService:
         """
         Create necessary directories for storing EPUB files and extracted images.
         """
-        if not os.path.exists(cls.__BOOK_IMAGES_DIR):
-            os.makedirs(cls.__BOOK_IMAGES_DIR, exist_ok=True)
-
-        if not os.path.exists(cls.__BOOK_DIR):
-            os.makedirs(cls.__BOOK_DIR, exist_ok=True)
+        directory_creator(cls.__BOOK_IMAGES_DIR)
+        directory_creator(cls.__BOOK_DIR)
 
     async def save_ebook_file(self, epub_file: UploadFile) -> None:
         """
@@ -45,11 +42,9 @@ class EpubService:
         images_dir = os.path.join(
             EpubService.__BOOK_IMAGES_DIR, self.output_images_dir_name
         )
+        directory_creator(images_dir)
 
         book = epub.read_epub(self.book_storaged_file_path)
-
-        if not os.path.exists(images_dir):
-            os.makedirs(images_dir, exist_ok=True)
 
         for image in book.get_items_of_type(ITEM_IMAGE):
             image_name: str = image.get_name().split('/').pop()

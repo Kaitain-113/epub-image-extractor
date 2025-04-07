@@ -27,3 +27,17 @@ def file_compressor(
             zipf.write(file, os.path.basename(file))
 
     return compressed_file, compressed_file_name, compressed_file_header[file_type]
+
+
+def directory_creator(dir_path: str) -> bool:
+    """
+    Create a directory if it doesn't exist.
+
+    :param dir_path: Directory path to create
+    :return: True if directory is created, False if it already exists
+    """
+    if os.path.exists(dir_path):
+        return False
+
+    os.makedirs(dir_path, exist_ok=True)
+    return True
