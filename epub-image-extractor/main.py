@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, Form, Request, UploadFile
+from fastapi import BackgroundTasks, FastAPI, Form, Request, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -21,12 +21,17 @@ async def render_upload_page(request: Request):
 
 
 @app.post('/upload')
-async def extract_image_from_book(epub_file: UploadFile = Form(...)):
+async def extract_image_from_book(
+    background_tasks: BackgroundTasks, epub_file: UploadFile = Form(...)
+):
     epub_service = EpubService()
     await epub_service.save_ebook_file(epub_file)
+
     book_images_data: dict = epub_service.get_image_from_ebook(
         compressed_file_extension='zip'
     )
+
+    background_tasks.add_task(epub_service.clean_up)
 
     return FileResponse(
         book_images_data.get('compressed_file_path'),

@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from ebooklib import ITEM_IMAGE, epub
 from fastapi import UploadFile
@@ -64,3 +65,14 @@ class EpubService:
             'compressed_file_path': file_path,
             'file_type_header': file_type_header,
         }
+
+    def clean_up(self) -> None:
+        """
+        Delete temporary files and directories: book file and book images folder.
+        """
+        os.remove(self.book_storaged_file_path)
+
+        images_dir = os.path.join(
+            EpubService.__BOOK_IMAGES_DIR, self.output_images_dir_name
+        )
+        shutil.rmtree(images_dir, ignore_errors=True)
