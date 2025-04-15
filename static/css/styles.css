@@ -1,0 +1,52 @@
+.gentium-book-plus-regular {
+    font-family: "Gentium Book Plus", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+  
+.gentium-book-plus-bold {
+    font-family: "Gentium Book Plus", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.gentium-book-plus-regular-italic {
+    font-family: "Gentium Book Plus", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.gentium-book-plus-bold-italic {
+    font-family: "Gentium Book Plus", serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    width: 50vw;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.hero {
+    background-size: cover;
+    height: 90vh;
+}

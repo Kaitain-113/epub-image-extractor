@@ -5,9 +5,15 @@
     <title>Ebook Image Extractor</title>
     <meta name="description" content= "Extract images from epub files">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/images/favicon.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/fontawesome/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='/css/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/animate.css') }}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-success bg-gradient navbar-dark bg-opacity-100">
@@ -16,36 +22,65 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
                     <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
                 </svg>
-                <span class="align-middle">Ebook Image Extractor</span>
+                <span class="align-middle gentium-book-plus-bold">Ebook Image Extractor</span>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link link-light" aria-current="page" href="#">
+                <a class="nav-link link-opacity-100" aria-current="page" href="https://github.com/Kaitain-113/epub-image-extractor">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
                         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
                     </svg>
-                    <span class="align-middle">GitHub</span>
+                    <span class="align-middle gentium-book-plus-regular ">GitHub</span>
                 </a>
             </div>
             </div>
         </div>
     </nav>
 
-    <main class="container">
-        <form action="{{ url_for('extract_image_from_book') }}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="formFile" class="form-label">Selecionar livro dos arquivos</label>
-                <input name="epub_file" class="form-control" type="file" id="formFile">
-            </div>
+    <main class="hero d-flex justify-content-around" style="background: url('{{ url_for('static', path='/images/background_image.jpg') }}')">
+        <div>
+            <header class="row animate__animated animate__fadeIn mb-5">
+                <div class="col-12">
+                    <h1 class="text-center mt-5 text-light gentium-book-plus-bold">Ebook Image Extractor</h1>
+                    <h5 class="text-center text-light gentium-book-plus-regular">Extract images from epub files</h5>
+                </div>
+            </header>
             
-            <button type="submit" class="btn btn-success">Submit</button>
-        </form>
+            <hr class="mb-5 opacity-0">
+
+            <div class="row animate__animated animate__fadeIn">
+                
+                <p class="select-an-epub text-center text-light gentium-book-plus-regular-italic">Select an EPUB file</p>
+                
+                <form
+                    action="{{ url_for('extract_image_from_book') }}"
+                    method="post"
+                    enctype="multipart/form-data"
+                    class="d-flex flex-column align-items-center justify-content-center"
+                >
+                <label class="upload-btn btn btn-success col-6 text-center" for="formFile">
+                    <span class="epub-file-name text-light font-weight-bold gentium-book-plus-regular-italic">Browse...</span> 
+                    <input type="file" style="display: none;" id="formFile" name="epub_file" accept=".epub">
+                </label>
+
+                <button type="submit" class="submit-button btn btn-success gentium-book-plus-regular mt-3 col-6 d-none">Enviar</button>
+            </div>
+        </div>
     </main>
 
-        
+    <footer class="bg-success text-center text-light gentium-book-plus-regular  position-fixed bottom-0 w-100">
+        <!-- Copyright -->
+        <div class="text-center p-3">
+            Made with ❤️ by 
+            <a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="https://www.linkedin.com/in/rubensds">Rubens dos Santos</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
     <script src="{{ url_for('static', path='/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', path='/js/scripts.js') }}"></script>
 </body>
 </html>
