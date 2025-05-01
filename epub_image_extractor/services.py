@@ -4,8 +4,11 @@ import shutil
 from ebooklib import ITEM_IMAGE, epub
 from fastapi import UploadFile
 
-from .helpers import directory_creator, file_compressor, generate_uuid_string
-
+from epub_image_extractor.helpers import (
+    directory_creator,
+    file_compressor,
+    generate_uuid_string
+)
 
 class EpubService:
     __BOOK_IMAGES_DIR = 'storage/extracted_images/'

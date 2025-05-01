@@ -20,9 +20,9 @@ dev = [
 
 
 [tool.taskipy.tasks]
-serve = "fastapi dev epub-image-extractor/main.py"
-run_host = 'fastapi dev fastapi_zero/app.py --host 0.0.0.0'
-test = 'pytest -s --cov=fastapi_zero -vv'
+serve = "fastapi dev epub_image_extractor/main.py"
+run_host = 'fastapi dev epub_image_extractor/main.py --host 0.0.0.0'
+test = 'pytest -s --cov=epub_image_extractor -vv'
 
 
 [tool.pytest.ini_options]

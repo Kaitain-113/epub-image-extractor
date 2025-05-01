@@ -4,7 +4,7 @@ from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from .services import EpubService
+from epub_image_extractor.services import EpubService
 
 app = FastAPI()
 
