@@ -11,3 +11,7 @@ wheels/
 
 # project files
 storage/
+
+#test
+htmlcov
+.coverage
